@@ -1,0 +1,23 @@
+﻿﻿@model XPos.DataModel.Product
+
+<tr>
+    <td>
+        <input data-val="true" id="ProductId" name="ProductId" type="hidden" value="@Model.Id">
+        <input class="form-control text-box single-line" id="ProductName" name="ProductName" readonly="readonly" type="text" value="@Model.Name">
+    </td>
+    <td>
+        <input class="form-control text-right text-box single-line" id="Price" name="Price" readonly="readonly" type="text" value="@Model.Price">
+    </td>
+    <td>
+        <input type="number" class="form-control text-right" id="Quantity" min="0" name="Quantity" value="1" onchange="ChangeQuantity(this)"
+               onkeyup="ChangeQuantity(this)">
+    </td>
+    <td>
+        <input class="form-control text-right text-box single-line" id="Amount" name="Amount" readonly="readonly" type="text" value="@Model.Price">
+    </td>
+    <td>
+        <button type="button" class="btn btn-danger btn-remove" onclick="RemoveOrder(this)" title="Remove">
+            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+        </button>
+    </td>
+</tr>

@@ -1,0 +1,10 @@
+﻿@model IEnumerable<XPos.DataModel.Variant>
+
+    <select>
+        <option value="">Select Variant</option>
+        @foreach (var item in Model)
+        {
+            <option value="@item.Id">@item.Initial</option>
+        }
+    </select>
+

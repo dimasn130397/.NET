@@ -1,0 +1,65 @@
+﻿﻿@model IEnumerable<XPos.DataModel.Product>
+<div class="row">
+    <div class="col-lg-11">
+        <input type="text" id="txt-search" class="form-control" placeholder="Search: leave empty for all..." />
+    </div>
+    <div class="col-lg-1">
+        <button type="button" id="btn-search" class="btn btn-sm btn-success">
+            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+        </button>
+    </div>
+</div>
+<div class="row">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Select</th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Initial)/
+                    @Html.DisplayNameFor(model => model.Name)/
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Price)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Stock)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <input type="button" class="btn btn-sm btn-success" value="Select" id-data="@item.Id" onclick="SelectProduct(@item.Id)" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Initial)<br />
+                        @Html.DisplayFor(modelItem => item.Name)<br />
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Stock)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script type="text/javascript">
+    $("#btn-search").click(function () {
+        $.ajax({
+            url: '@Url.Action("ProductList", "Order")',
+            type: 'get',
+            data: { search: $("#txt-search").val() },
+            success: function (result) {
+                $(".modal-body").html(result);
+            }
+        })
+    })
+</script>

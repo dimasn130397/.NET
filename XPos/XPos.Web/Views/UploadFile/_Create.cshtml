@@ -1,0 +1,88 @@
+﻿﻿@model XPos.DataModel.FileCollection
+
+
+@using (Html.BeginForm("Create", "UploadFile", FormMethod.Post, new { id = "form-create", name = "form-create", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.FileName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" name="selectedfile" id="selectedfile" class="btn btn-default" onchange="showPreview(this)" />
+                <br />
+                <img src="~/UploadFiles/no-image.png" alt="No Image" id="img-preview" width="200px" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Active, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.Active)
+                    @Html.ValidationMessageFor(model => model.Active, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="button" value="Cancel" data-dismiss="modal" class="btn btn-default" />
+                <input type="button" value="Upload File" id="upload-file" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+
+@Scripts.Render("~/bundles/jqueryval")
+
+<script type="text/javascript">
+        $("#upload-file").click(function () {
+            var formData = new FormData();
+
+            formData.append("file", $('#selectedfile')[0].files[0]);
+
+            var other_data = $("#form-create").serializeArray();
+
+            $.each(other_data, function (key, input) {
+                formData.append(input.name, input.value);
+            });
+
+            $.ajax({
+                url: '@Url.Action("Create", "UploadFile")',
+                type: 'post',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    if (result.success) {
+                        var ent = result.entity;
+                        alert(`Save successful\nTitle: ${ent.Title}, File Name: ${ent.FileName}`);
+                        $("#modal1").modal("hide");
+                        GetList();
+                    } else {
+                        alert(`Error: ${result.message}`);
+                    }
+                }
+            })
+            return false;
+        })
+
+        function showPreview(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $("#img-preview").attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+</script>

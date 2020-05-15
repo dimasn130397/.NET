@@ -1,0 +1,219 @@
+﻿@model IEnumerable<WFHViewModel.PelamarViewModel>
+
+
+
+<div class="row">
+    <div class="col-lg-8"></div>
+    <div class="col-lg-4" style="margin-left:0px;padding-left:130px;">
+        <div class="btn-group btn-trans" style="margin-left:12px;" role="group" aria-label="...">
+            <div class="btn-group">
+                <button type="button" class="btn dropdown-toggle btn-trans  btn-lg " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="glyphicon glyphicon-sort"></span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-right btn-link-a">
+                    <li class="dropdown-header dh">Order</li>
+                    <li><a href="javascript:void(0)" class="btn-link sort-asc">Ascending</a></li>
+                    <li><a href="javascript:void(0)" class="btn-link sort-desc">Descending</a></li>
+                </ul>
+            </div>
+            <div class="btn-group">
+                <button type="button" class="btn dropdown-toggle btn-trans  btn-lg " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="glyphicon glyphicon-align-justify"></span>
+                </button>
+                <ul class="dropdown-menu btn-link-a">
+                    <li class="dropdown-header dh">Row Per Page</li>
+                    <li><a href="javascript:void(0)" class="btn-link btn-list" data-container="5">5</a></li>
+                    <li><a href="javascript:void(0)" class="btn-link btn-list" data-container="10">10</a></li>
+                    <li><a href="javascript:void(0)" class="btn-link btn-list" data-container="20">20</a></li>
+                    <li><a href="javascript:void(0)" class="btn-link btn-list" data-container="30">30</a></li>
+                    <li><a href="javascript:void(0)" class="btn-link btn-list" data-container="40">40</a></li>
+                    <li><a href="javascript:void(0)" class="btn-link btn-list" data-container="50">50</a></li>
+                </ul>
+            </div>
+            <button type="button" class="btn btn-trans btn-lg btn-create-new"><span class="glyphicon glyphicon-plus-sign"></span></button>
+        </div>
+    </div>
+</div>
+
+<table class="table">
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td style="border-top-width: 0px;">
+                    <div class="row" id="content" style="background-color:#ccccff; margin-left:0px; width: 750px">
+                        <div class="col-md-10" style="left:10px; bottom:10px;">
+                            <div class="col-md-12" style=" padding-left: 0px; top: 10px;">
+                                <h4 style="color:#000080; font-weight:bold;">@Html.DisplayFor(modelItem => item.fullname)</h4>
+                            </div>
+                            <div class="row">
+                                <div class="secTitle col-md-4">
+                                    Nama Panggilan
+                                </div>
+                                <div class="secContent col-md-8">
+                                    @Html.DisplayFor(modelItem => item.nick_name)
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="secTitle col-md-4">
+                                    Email
+                                </div>
+                                <div class="secContent col-md-8">
+                                    @Html.DisplayFor(modelItem => item.email)
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="secTitle col-md-4">
+                                    No. Handphone
+                                </div>
+                                <div class="secContent col-md-8">
+                                    @Html.DisplayFor(modelItem => item.phone_number1)
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="secTitle col-md-4">
+                                    Pendidikan
+                                </div>
+                                <div class="secContent col-md-8">
+                                    @Html.DisplayFor(modelItem => item.jurusan), @Html.DisplayFor(modelItem => item.pendidikan)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2" style="top:45px;">
+                            <div class="btn-group btn-group-sm">
+                                <button type="button" class="btn btn-default btn-details" data-id="@item.id" title="Details Pelamar">
+                                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                </button>
+                                <button type="button" class="btn btn-default btn-token" data-id="@item.id" title="Kirim Token">
+                                    <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td></td>
+            <td><button type="button" class="btn btn-primary btn-sm btn-pill pull-right" onclick="min()"><b>&#8592; Previous</b></button></td>
+            <td><button type="button" class="btn btn-primary btn-sm btn-pill pull-left" onclick="plus()"><b>Next &#8594;</b></button></td>
+        </tr>
+    </tfoot>
+
+</table>
+
+<script type="text/javascript">
+    var biodata_id;
+
+    $(".btn-search").click(function () {
+        console.log($("#txt-search").val());
+        $.ajax(
+             {
+                 url: '@Url.Action("PelamarList", "Pelamar")',
+                 type: 'get',
+                 data: { search: $("#txt-search").val() },
+                 success: function (result) {
+                     $("#data").html(result);
+                 }
+             });
+    });
+    $(".btn-create-new").click(function () {
+        $.ajax(
+            {
+                url: '@Url.Action("Create", "Pelamar")',
+                type: 'get',
+                success: function (result) {
+                    $(".modal-object .modal-title").html("Masukkan Biodata");
+                    $(".modal-object .modal-body").html(result);
+                    $(".modal-object").modal("show");
+                    $("#datepicker").datepicker({
+                        dateFormat: "yy-mm-dd"
+                    });
+
+                }
+            });
+    });
+    $(".btn-details").click(function () {
+        biodata_id = $(this).attr("data-id");
+        $.ajax(
+            {
+                url: '@Url.Action("IndexDetail", "Pelamar")',
+                type: 'get',
+                data: { id: biodata_id },
+                success: function (result) {
+                    $(".modal-pelamar .modal-title").html("Detail Pelamar");
+                    $(".modal-pelamar .modal-body").html(result);
+                    $(".modal-pelamar").modal("show");
+                }
+            });
+    });
+
+    /*ROW PER PAGE*/
+    $(".btn-list").click(function () {
+        page = 0;
+        dataPerPage = $(this).attr("data-container");
+        GetList();
+    });
+    /*GO TO PREVIOUS PAGE*/
+    function min() {
+        if (page > 0) {
+            page = page - 1;
+        }
+        console.log(page);
+        GetList();
+    };
+    /*GO TO NEXT PAGE*/
+    function plus() {
+        if (page < maxPage) {
+            page = page + 1;
+        }
+        console.log(page);
+        GetList();
+    };
+
+    /*SHOW DATA BY SEARCH*/
+    $(".btn-search").click(function () {
+        desc = 0;
+        page = 0;
+        search = $("#txt-search").val();
+        GetList();
+    });
+
+    /*SORT ASCENDING*/
+    $(".sort-asc").click(function () {
+        desc = 0;
+        page = 0;
+        GetList();
+    });
+
+    /*SORT DESCENDING*/
+    $(".sort-desc").click(function () {
+        desc = 1;
+        page = 0;
+        GetList();
+    });
+
+    /*CLEAR SEARCH*/
+    $(".btn-clear").click(function () {
+        page = 0;
+        search = "";
+        GetList();
+    });
+
+    var bioId = 0;
+    $(".btn-token").click(function () {
+        bioId = $(this).attr("data-id");
+        $.ajax(
+            {
+                url: '@Url.Action("KirimToken","Email")',
+                type: 'get',
+                success: function (result) {
+                    $(".modal-layout .modal-title").html("Kirim Token");
+                    $(".modal-layout .modal-body").html(result);
+                    $(".modal-layout").modal("show");
+                }
+            });
+    });
+</script>

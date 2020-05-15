@@ -1,0 +1,112 @@
+﻿
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color:#f1f1f1;
+}
+
+/* Style the header */
+header {
+    background-color: white;
+    padding-left: 50px;
+    text-align: left;
+    font-size: 35px;
+    color: #000080;
+}
+
+.nav > li {
+    border-bottom: 2px solid #000080;
+}
+
+/* Create two columns/boxes that floats next to each other */
+nav {
+    float: left;
+    width: 25%;
+    min-height: 450px; /* only for demonstration, should be removed */
+    padding: 20px;
+    padding-left: 100px;
+}
+
+    /* Style the list inside the menu */
+    nav ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+article {
+    float: left;
+    padding: 20px;
+    width: 70%;
+    background-color: #fff; /* only for demonstration, should be removed */
+}
+
+/* Clear floats after the columns */
+section:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Style the footer */
+footer {
+    background-color: #000080;
+    padding: 10px;
+    text-align: center;
+    color: white;
+}
+
+/* Responsive layout - makes the two columns/boxes stack on top of each other instead of next to each other, on small screens */
+@media (max-width: 600px) {
+    nav, article {
+        width: 100%;
+        height: auto;
+    }
+}
+
+.navbar-inverse {
+    background-color: #000080;
+    border-color: #000060;
+}
+
+    .navbar-inverse .navbar-nav > li > a {
+        color: #ffffff;
+    }
+
+        .navbar-inverse .navbar-nav > li > a:hover {
+            color: #999;
+        }
+
+    .navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus {
+        color: #fff;
+        background-color: #000050;
+    }
+
+
+.search {
+    width: 100%;
+    position: relative;
+    display: flex;
+}
+
+.searchTerm {
+    width: 100%;
+    border: 3px solid #000080;
+    border-right: none;
+    padding: 5px;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+    color: #000080;
+}
+
+    .searchTerm:focus {
+        color: #00B4CC;
+    }
+
+.searchButton {
+    height: 36px;
+    border: 1px solid #000080;
+    background: #000080;
+    text-align: center;
+    color: #fff;
+    cursor: pointer;
+    font-size: 20px;
+}

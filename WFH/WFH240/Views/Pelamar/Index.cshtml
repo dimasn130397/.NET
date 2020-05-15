@@ -1,0 +1,103 @@
+﻿@model IEnumerable<WFHViewModel.BiodataViewModel>
+@{
+    ViewBag.Title = "Pelamar";
+}
+
+<style>
+
+    .formPelamar {
+        border: 0;
+        background-color: #e2e2e2;
+        color: #000080;
+    }
+
+    .fa {
+        margin-right: 20px;
+    }
+</style>
+
+<div class="panel panel-default">
+    <div class="row" style="margin-bottom:5px;">
+        <div class="col-lg-6">
+            <div class="input-group" style="width:100%;">
+                <input type="text" id="txt-search" class="form-control" style="" placeholder="Nama Pelamar">
+                <span class="input-group-btn">
+                    <button class="btn btn-pp btn-search" style="height:25px;border-radius:0px;font-size:x-small;font-weight:bold;padding:0px;" type="button"><h4><b>Cari</b></h4></button>
+                </span>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <button class="btn btn-clear" style="height:25px;border-radius:0px; color:white;background-color:#000080;"
+                    type="button">
+                <h4 style="bottom:10px;"><b>Reset</b></h4>
+            </button>
+        </div>
+    </div>
+    <div class="panel-body">
+    </div>
+    <div id="data">
+        ...
+    </div>
+</div>
+<div class="modal fade modal-pelamar" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="close"><span aria-hidden="true">&times;</span></button>
+                <h3 class="modal-title">modal title</h3>
+            </div>
+            <div class="modal-body">
+                <p>one fine body&hellip;</p>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div id="create-serti" class="modal fade modal-create" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="background: darkblue">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" style="background: darkblue; color: white">Modal title</h4>
+            </div>
+            <div class="modal-body">
+                <p>One fine body&hellip;</p>
+            </div>
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- /.modal-content DELETE -->
+<div class="modal fade modal-delete" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Modal title</h4>
+            </div>
+            <div class="modal-body">
+                <p>One fine body&hellip;</p>
+            </div>
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!--edit-->
+
+<script type="text/javascript">
+
+        $(".btn-search").click(function () {
+            console.log($("#txt-search").val());
+            $.ajax(
+                 {
+                     url: '@Url.Action("PelamarList", "Pelamar")',
+                     type: 'get',
+                     data: { search: $("#txt-search").val() },
+                     success: function (result) {
+                         $("#data").html(result);
+                     }
+                 });
+        });
+
+</script>

@@ -1,0 +1,77 @@
+﻿﻿@{
+    ViewBag.Title = "File";
+}
+
+<h2>@ViewBag.Title Galery</h2>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            <input type="button" class="btn btn-success" id="btn-create" value="Create New" />
+            <input type="button" class="btn btn-warning" id="btn-prev" value="< Prev" />
+            <input type="button" class="btn btn-warning" id="btn-next" value="Next >" />
+        </h3>
+    </div>
+    <div class="panel-body">
+        Loading...
+    </div>
+</div>
+
+<div id="modal1" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Modal title</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+@section Scripts{
+    <script type="text/javascript">
+        var currPage = 1;
+        var maxPage = 1;
+        $(document).ready(function () {
+            GetList(currPage)
+        })
+
+        function GetList(pg) {
+            $.ajax({
+                url: '@Url.Action("List", "UploadFile")',
+                type: 'get',
+                data: { page: currPage, perPage: 8 },
+                success: function (result) {
+                    $(".panel-body").html(result);
+                }
+            });
+        }
+
+        $("#btn-create").click(function () {
+            $.ajax({
+                url: '@Url.Action("Create", "UploadFile")',
+                type: 'get',
+                success: function (result) {
+                    $(".modal-body").html(result);
+                    $(".modal").modal("show");
+                }
+            });
+        })
+
+        $("#btn-prev").click(function () {
+            if (currPage > 1) {
+                currPage--;
+            }
+            GetList(currPage);
+        });
+
+        $("#btn-next").click(function () {
+            if (currPage < maxPage) {
+                currPage++;
+            }
+            GetList(currPage);
+        });
+    </script>
+}

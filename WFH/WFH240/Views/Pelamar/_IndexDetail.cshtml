@@ -1,0 +1,60 @@
+﻿@model WFHViewModel.BiodataViewModel
+<link rel="stylesheet" href="~/Content/BioView.css">
+@Html.AntiForgeryToken()
+
+
+
+<form id="">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3">
+                <table style="width:200px; border:2px solid #000080; font-size:small;">
+
+
+                    <tr>
+                        <td style="border:2px solid #000080;"><button type="button" style="padding-left:45px; color:#000080;" id="btn-sertifikasi">Sertifikat</button></td>
+                    </tr>
+
+
+                </table>
+
+            </div>
+            <div class="col-sm-9">
+
+                <!-- Page content -->
+                <div id="datadata" style="bottom:-20px;">
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+
+<script>
+    $("#btn-sertifikasi").click(function () {
+        $.ajax({
+           url: '@Url.Action("ListSertifikasi", "Sertifikasi")',
+              type: 'get',
+            data: { id: biodata_id },
+              success: function (result) {
+                  $("#datadata").html(result);
+            }
+        });
+    });
+    function GetSertifikasi() {
+        $.ajax({
+            url: '@Url.Action("ListSertifikasi", "Sertifikasi")',
+            type: 'get',
+            data: { biodata_id: biodata_id },
+            success: function (result) {
+                $("#datadata").html(result);
+                //   console.log(bioid);
+            }
+        });
+    }
+    
+
+
+</script>
+

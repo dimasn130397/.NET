@@ -1,0 +1,123 @@
+﻿@model IEnumerable<WFHViewModel.SertifikasiViewModel>
+
+<link rel="stylesheet" href="~/content/sertifikasi.css" />
+<h2>
+    <font color="#000080">
+        <b>Sertifikasi</b>
+        <button type="button" class="btn btn-primary btn-create-a" id="btn-create-new">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+
+        </button>
+    </font>
+</h2>
+<div id="data-list">
+    <!--data-list  harus sama dg yg di javascript jquery--->
+
+</div>
+<!--<input id="btn-create-new" type="button" class="btn btn-default" btn-lg" value="klik" />-->
+
+<table class="table table-striped" style="border-bottom: 2px solid #000080; color: #000080; ">
+    <thead style="border-bottom: 5px solid #000080; border-top :5px solid #000080;">
+        <tr>
+            <th>
+                NAMA SERTIFIKASI
+            </th>
+            <th>
+                PENERBIT
+            </th>
+
+            <th>
+                MASA BERLAKU SERTIFIKASI
+            </th>
+            <th>
+                #
+            </th>
+
+        </tr>
+
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.certificate_name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.publisher)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.valid_start_year)-@Html.DisplayFor(modelItem => item.valid_start_month) s.d. @Html.DisplayFor(modelItem => item.until_year)-@Html.DisplayFor(modelItem => item.until_month)
+                </td>
+                <td>
+                    <!-- Split button -->
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-blue">More</button>
+                        <button type="button" class="btn  dropdown-toggle btn-blue" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="btn-edit" data-container="@item.id">Edit</a></li>
+                            <li><a class="btn-delete" data-container="@item.id">Delete</a></li>
+
+
+                        </ul>
+                    </div>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<script type="text/javascript">
+    $("#btn-create-new").click(function () {
+        $.ajax({
+            url: '@Url.Action("AddSertifikasi", "Sertifikasi")',
+            type: 'get',
+            success: function (result) {
+                $(".modal-create .modal-title").html("Tambah Sertifikasi");
+                $("#create-serti .modal-body").html(result);
+                $("#create-serti").modal("show");
+            }
+        });
+
+    });
+    $(".btn-edit").click(function () {
+        $.ajax({
+            url: '@Url.Action("EditSertifikasi","Sertifikasi")',
+            type: 'get',
+            data: { id: $(this).attr("data-container") },// attr = atribut
+            //
+            success: function (result) {
+                $(".modal-create .modal-title").html("Ubah Sertifikasi");
+                $("#create-serti .modal-body").html(result);
+                $("#create-serti").modal("show");
+            }
+        });
+
+    });
+
+    $(".btn-delete").click(function () {
+        $.ajax({
+            url: '@Url.Action("DeleteSertifikasi", "Sertifikasi")',
+            type: 'get',
+            data: { id: $(this).attr("data-container") },
+
+            success: function (result) {
+                $(".modal-delete .modal-title").html("Hapus Sertifikasi");
+                $(".modal-delete .modal-body").html(result);
+                $(".modal-delete").modal("show");
+            }
+        });
+
+    });
+
+</script>
+
+
+
+

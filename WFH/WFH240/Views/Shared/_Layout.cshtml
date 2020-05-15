@@ -1,0 +1,140 @@
+﻿﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - XSIS 2.0</title>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    @*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">*@
+    <link href="~/Content/style.css" rel="stylesheet" />
+</head>
+<body>
+
+    @*NAVBAR*@
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class="k-dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu 1 <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="~/Pendidikan">Pilih 1</a></li>
+                        <li><a href="~/Pelatihan">Pilih 2</a></li>
+                        <li><a href="#">Pilih 3</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+            <ul class="nav navbar-nav">
+                <li class="k-dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu 2 <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Pilih 1</a></li>
+                        <li><a href="#">Pilih 2</a></li>
+                        <li><a href="#">Pilih 3</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+            <ul class="nav navbar-nav">
+                <li class="k-dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu 3 <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Pilih 1</a></li>
+                        <li><a href="#">Pilih 2</a></li>
+                        <li><a href="#">Pilih 3</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li class="k-dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Hi, Dim <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Profil</a></li>
+                        <li><a href="#">Ganti Akses</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Log Out</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li class="k-dropdown">
+                    <a href=""><i class="fa fa-bell" aria-hidden="true"></i></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    @*END_NAVBAR*@
+
+    <header>
+        <h1 class="container">XSIS 2.0</h1>
+    </header>
+    <section>
+        <nav>
+            @*SIDEBAR*@
+            <ul class="nav nav-sidebar" style="border:2px solid #000080;border-bottom:none;background-color:white">
+                <li><a href="~/"><i class="fa fa-circle"></i> Beranda</a></li>
+            
+                <li><a href="~/Pelamar"><i class="fa fa-circle"></i> Pelamar</a></li>
+
+                <li class="k-dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-circle"></i> Penjadwalan <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Pilih 1</a></li>
+                        <li><a href="#">Pilih 2</a></li>
+                        <li><a href="#">Pilih 3</a></li>
+                    </ul>
+                </li>
+                <li class="k-dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-circle"></i> Tes <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Pilih 1</a></li>
+                        <li><a href="#">Pilih 2</a></li>
+                        <li><a href="#">Pilih 3</a></li>
+                    </ul>
+                </li>
+                <li class="k-dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-circle"></i> Bootcamp <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Pilih 1</a></li>
+                        <li><a href="#">Pilih 2</a></li>
+                        <li><a href="#">Pilih 3</a></li>
+                    </ul>
+                </li>
+                <li class="k-dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-circle"></i> Laporan <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Pilih 1</a></li>
+                        <li><a href="#">Pilih 2</a></li>
+                        <li><a href="#">Pilih 3</a></li>
+                    </ul>
+                </li>
+            </ul>
+            @*END_SIDEBAR*@
+        </nav>
+        <article>
+            @RenderBody()
+        </article>
+    </section>
+
+    <footer>
+        <p>&copy; @DateTime.Now.Year - Xsis Mitra Utama</p>
+    </footer>
+
+</body>
+</html>

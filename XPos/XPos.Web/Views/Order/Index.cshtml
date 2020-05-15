@@ -1,0 +1,158 @@
+﻿﻿@{
+    ViewBag.Title = "Order";
+}
+
+<h2>Point of Sale</h2>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            <input type="button" class="btn btn-success" id="btn-new-order" value="New Order" />
+            <input type="button" class="btn btn-warning" id="btn-billing" value="Billing" />
+            <input type="button" class="btn btn-danger" id="btn-new-trans" value="New Trans." />
+        </h3>
+    </div>
+    <div class="panel-body">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th style="width:25%">Product Name</th>
+                    <th style="width:25%">Price</th>
+                    <th style="width:25%">Quantity</th>
+                    <th style="width:25%">Amount</th>
+                    <th>Remove</th>
+                </tr>
+            </thead>
+            <tbody id="order-list">
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th colspan="2">Total</th>
+                    <th>
+                        <input class="form-control text-right text-box single-line" id="total-quantity" name="TotalQuantity" readonly="readonly" type="text" value="0">
+                    </th>
+                    <th>
+                        <input class="form-control text-right text-box single-line" id="total-amount" name="TotalAmount" readonly="readonly" type="text" value="0">
+                    </th>
+                    <th>Remove</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+
+<div id="modal1" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Modal title</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+@section Scripts{
+    <script type="text/javascript">
+        var idx = 1;
+        var data;
+        $("#btn-new-order").click(function () {
+            $.ajax({
+                url: '@Url.Action("ProductList", "Order")',
+                type: 'get',
+                success: function (result) {
+                    $(".modal-title").html("Select Product");
+                    $(".modal-body").html(result);
+                    $(".modal").modal("show");
+                }
+            })
+        });
+
+        function SelectProduct(id) {
+            $.ajax({
+                url: '@Url.Action("OrderByProduct", "Order")',
+                type: 'get',
+                data: { id: id },
+                success: function (result) {
+                    $("#order-list").append(result);
+                    $(".modal").modal("hide");
+                    Recalculate();
+                }
+            })
+        }
+
+        function ChangeQuantity(obj) {
+            var tr = $(obj).closest('tr');
+            var price = tr.find('input[name=Price]').val();
+            var qty = $(obj).val();
+            tr.find("input[name=Amount]").val(parseFloat(price) * parseFloat(qty));
+            Recalculate();
+        }
+
+        function RemoveOrder(obj) {
+            var id = $(obj).attr('id-data');
+            var tr = $(obj).closest('tr');
+            if (confirm(`Remove id ${id} ?`)) {
+                tr.remove();
+                Recalculate();
+            }
+        }
+
+        function Recalculate() {
+            var totQty = 0;
+            var totAmount = 0;
+            $("#order-list").find("tr").each(function (item) {
+                totQty = parseFloat(totQty) + parseFloat($(this).find("input[name=Quantity]").val());
+                totAmount = parseFloat(totAmount) + parseFloat($(this).find("input[name=Amount]").val());
+            })
+
+            $("#total-quantity").val(totQty);
+            $("#total-amount").val(totAmount);
+        }
+
+        $("#btn-billing").click(function () {
+            var orderDetails = [];
+            $("#order-list").find('tr').each(function (item) {
+                var qty = parseFloat($(this).find("input[name=Quantity]").val());
+                if (qty > 0) {
+                    var detail = {
+                        ProductId : $(this).find("input[name=ProductId]").val(),
+                        ProductName : $(this).find("input[name=ProductName]").val(),
+                        Price : $(this).find("input[name=Price]").val(),
+                        Quantity : $(this).find("input[name=Quantity]").val()
+                    }
+                    orderDetails.push(detail);
+                }
+            });
+
+            //console.log(orderDetails);
+
+            data = {
+                Amount: $("#total-amount").val(),
+                OrderDetails: orderDetails
+            }
+
+            $.ajax({
+                url: '@Url.Action("Payment", "Order")',
+                type: 'post',
+                data: { model: data},
+                success: function (result) {
+                    //console.log(result);
+                    //$("#order-list").append(result);
+                    $(".modal-title").html("Billing");
+                    $(".modal-body").html(result);
+                    $(".modal").modal("show");
+                }
+            })
+        });
+
+        $("#btn-new-trans").click(function () {
+            var conf = confirm("Are you sure to create new transaction?");
+            if (conf) {
+                location.reload();
+            }
+        })
+    </script>
+}
